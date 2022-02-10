@@ -5,8 +5,9 @@ import requests
 import math
 from time import sleep 
 
-zeros = []
-ones = []
+zeros = 0
+ones = 0
+res_2 = []
 
 for p in range (100):
     round_1 = requests.get('https://drand.cloudflare.com/public/latest', headers={ 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20130401 Firefox/31.0'})
@@ -29,42 +30,46 @@ for p in range (100):
     res = [int(x) for x in str(res)]
     #print (res)
 
-    count = 0
-    prev = 0
-    indexend = 0
-    for i in range(0,len(res)):
-        if res[i] == 0:
-            count += 1
-        else:            
-            if count > prev:
-                prev = count
-                indexend = i
-            count = 0
-
-    zeros.append(prev)
-    print("The longest sequence of 0's is "+str(prev))
-    print("index start at: "+ str(indexend-prev))
-    print("index ends at: "+ str(indexend-1))
-
-    count_2 = 0
-    prev_2 = 0
-    indexend_2 = 0
-    for i in range(0,len(res)):
-        if res[i] == 1:
-            count_2 += 1
-        else:            
-            if count_2 > prev_2:
-                prev_2 = count_2
-                indexend_2 = i
-            count_2 = 0
-
-    ones.append(prev_2)
-    print("The longest sequence of 1's is "+str(prev_2))
-    print("index start at: "+ str(indexend_2-prev_2))
-    print("index ends at: "+ str(indexend_2-1))
+    res_2 = res_2 + res
+    print (res_2)
     sleep(30)
 
+count = 0
+prev = 0
+indexend = 0
+for i in range(0,len(res_2)):
+    if res_2[i] == 0:
+        count += 1
+    else:            
+        if count > prev:
+            prev = count
+            indexend = i
+        count = 0
+
+zeros = prev
+print("The longest sequence of 0's is "+str(prev))
+print("index start at: "+ str(indexend-prev))
+print("index ends at: "+ str(indexend-1))
+
+count_2 = 0
+prev_2 = 0
+indexend_2 = 0
+for i in range(0,len(res_2)):
+    if res_2[i] == 1:
+        count_2 += 1
+    else:            
+        if count_2 > prev_2:
+            prev_2 = count_2
+            indexend_2 = i
+        count_2 = 0
+
+ones = prev_2
+print("The longest sequence of 1's is "+str(prev_2))
+print("index start at: "+ str(indexend_2-prev_2))
+print("index ends at: "+ str(indexend_2-1))
+
+print("--------------------------------------")
 print("MAXIMUM LENGTH OF SEQUENCE OF 0'S :")
-print (max(zeros))
+print(zeros)
 print("MAXIMUM LENGTH OF SEQUENCE OF 1'S :")
-print(max(ones))
+print(ones)
