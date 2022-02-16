@@ -1,18 +1,18 @@
-#The project will take aproximatly 50 minutes since the site refreshes the numbers every 30 sec.
-
-
 import requests
-import math
-from time import sleep 
+import math 
 
 zeros = 0
 ones = 0
 res_2 = []
+round_1 = 0
 
 for p in range (100):
-    round_1 = requests.get('https://drand.cloudflare.com/public/latest', headers={ 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20130401 Firefox/31.0'})
-    round_1 = round_1.json()
-    round_1 = round_1["round"]
+    if p==0 :
+        round_1 = requests.get('https://drand.cloudflare.com/public/latest', headers={ 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20130401 Firefox/31.0'})
+        round_1 = round_1.json()
+        round_1 = round_1["round"]
+    else :
+        round_1 = round_1 - 1
     r = requests.get('https://drand.cloudflare.com/public/'+str(round_1), headers={ 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20130401 Firefox/31.0'})
     data = r.json()
     data = data["randomness"]
@@ -31,8 +31,7 @@ for p in range (100):
     #print (res)
 
     res_2 = res_2 + res
-    print (res_2)
-    sleep(30)
+print (res_2)
 
 count = 0
 prev = 0
